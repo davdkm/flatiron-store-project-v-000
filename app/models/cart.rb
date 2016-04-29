@@ -22,4 +22,21 @@ class Cart < ActiveRecord::Base
       self.line_items.new(item_id: new_item_id)
     end
   end
+
+  def subtract_inventory
+    self.line_items.each do |line_item|
+      if line_item.item.inventory >= line_item.quantity
+        line_item.item.inventory -= line_item.quantity
+        line_item.item.save
+      else
+        return "Not enough inventory on #{line_item.item.title}"
+      end
+    end
+  end
+
+  def checkout
+    self.subtract_inventory
+    self.user.unset_current_cart
+    self.update(status: 'submitted')
+  end
 end
