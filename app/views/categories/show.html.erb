@@ -2,11 +2,6 @@
 
 <ul>
 <% @category.items.each do |item| %>
-  <li><%= link_to item.title, item_path(item) %> | $<%= item.price.to_f/100 %>
-    <%= form_tag url: "/carts", method: 'POST' do %>
-      <%= hidden_field_tag :item_id, item.id %>
-      <%= submit_tag 'Add to Cart' %>
-    <% end %>
-  </li>
+  <li><%= link_to item.title, item_path(item) %> | <%= number_to_currency(item.price) %> <%= button_to 'Add to Cart', line_items_path(item_id: item) %></li>
 <% end %>
 </ul>
