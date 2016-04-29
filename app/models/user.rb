@@ -3,4 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :validatable
         #  :recoverable, :rememberable, :trackable
+  has_many :carts
+  attr_accessor :current_cart
+
 end
